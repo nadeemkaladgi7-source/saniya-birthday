@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Saniya's Birthday Arcade 🎮✨</title>
+
+  <!-- Google Fonts: Rounded & Aesthetic Display Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="arcade.css?v=2" />
+</head>
+<body class="arcade-body">
+
+  <!-- Floating Balloons Ambient Background -->
+  <div class="arcade-ambient-layer">
+    <div class="floating-balloon balloon-1">🎈</div>
+    <div class="floating-balloon balloon-2">💖</div>
+    <div class="floating-balloon balloon-3">✨</div>
+    <div class="floating-balloon balloon-4">🎂</div>
+    <div class="floating-balloon balloon-5">🌸</div>
+  </div>
+
+  <!-- Top Sticky Arcade Navigation -->
+  <header class="arcade-top-nav">
+    <div class="arcade-nav-left">
+      <a href="index.html" class="arcade-back-link" title="Return to Main Surprise">
+        <span>←</span> <span>Birthday Surprise</span>
+      </a>
+    </div>
+    <div class="arcade-nav-actions">
+      <button type="button" class="arcade-sound-btn" id="arcade-sound-toggle" onclick="window.ArcadeUtils.SoundManager.toggleMute()">
+        🔇 <span>Sound: Off</span>
+      </button>
+      <button type="button" class="arcade-sound-btn" onclick="if(confirm('Reset all 6 arcade games progress?')) window.ArcadeUtils.resetProgress()" title="Reset Progress">
+        ↻ <span>Reset</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Master Arcade Container -->
+  <main class="arcade-container">
+    
+    <!-- Hero Header -->
+    <section class="arcade-hero">
+      <div class="arcade-badge-pill">✦ SPECIAL BIRTHDAY EDITION ✦</div>
+      <h1 class="arcade-hero-title" id="arcade-hero-title" title="Tap 5 times for a secret easter egg!">
+        Saniya's Birthday Arcade 🕹️✨
+      </h1>
+      <p class="arcade-hero-sub">
+        4 curated birthday games made specially for my favorite person. Win games to unlock all 4 secret gifts and reveal the Grand Finale!
+      </p>
+    </section>
+
+    <!-- Progress Card (X/4 Gifts Unlocked) -->
+    <section class="arcade-progress-card">
+      <div class="progress-header-row">
+        <div class="progress-title-tag">
+          <span>🎁</span> <span>Gifts Unlocked</span>
+        </div>
+        <span class="progress-count-pill" id="progress-count-pill">0/4 Gifts Unlocked</span>
+      </div>
+      <div class="arcade-progress-track">
+        <div class="arcade-progress-fill" id="arcade-progress-fill"></div>
+      </div>
+      <div class="progress-footer-note">
+        <span>Complete all 4 games to reveal the Grand Finale surprise! ✨</span>
+        <button type="button" class="grand-finale-cta-btn" id="arcade-finale-cta" style="display:none;" onclick="window.ArcadeHub.triggerGrandFinale()">
+          🎉 Reveal Grand Finale! ➜
+        </button>
+      </div>
+    </section>
+
+    <!-- 4 Game Cards Grid -->
+    <section class="arcade-games-grid" id="arcade-games-grid"></section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- 🐥 GAME 1 VIEW: FLAPPY SANA (SKY HIGH ADVENTURE)                      -->
+  <!-- ===================================================================== -->
+  <div id="flappySana-view" class="arcade-game-view hidden">
+    <div class="game-view-header">
+      <div class="game-view-title-wrap">
+        <span class="game-view-icon">🐥</span>
+        <h2>Flappy Sana</h2>
+      </div>
+      <button type="button" class="arcade-back-link" onclick="window.ArcadeHub.closeGameView()">✕ Back</button>
+    </div>
+    <div class="game-view-container">
+      <div class="flappysana-stage">
+        <div class="flappysana-stats-bar">
+          <span id="flappySana-score">Score: 0 / 10</span>
+          <button type="button" class="arcade-back-link" id="flappySana-retry-btn" onclick="window.FlappySanaGame.reset()" style="display:none; padding:4px 12px; font-size:0.75rem; background:#ff4d6d; color:#fff;">Retry ↻</button>
+        </div>
+        <canvas class="flappysana-canvas" id="flappySana-canvas"></canvas>
+        <div class="flappy-controls-bar">
+          <button type="button" class="arcade-btn-play flappy-flap-btn" onclick="window.FlappySanaGame.flap()">
+            TAP TO FLAP 🪽
+          </button>
+        </div>
+        <p style="font-size:0.82rem; color:var(--arcade-text-muted); text-align:center;">
+          💡 Tap screen or press Spacebar to flap & fly! Collect stars ⭐ and pass 10 points to win!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 🎈 GAME 2 VIEW: BALLOON POP WISHES                                    -->
+  <!-- ===================================================================== -->
+  <div id="balloonPop-view" class="arcade-game-view hidden">
+    <div class="game-view-header">
+      <div class="game-view-title-wrap">
+        <span class="game-view-icon">🎈</span>
+        <h2>Balloon Pop Wishes</h2>
+      </div>
+      <button type="button" class="arcade-back-link" onclick="window.ArcadeHub.closeGameView()">✕ Back</button>
+    </div>
+    <div class="game-view-container">
+      <div id="balloonPop-stage"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 🎡 GAME 3 VIEW: SANIYA KI FARMAISH - WHEEL OF DEMANDS (AFREEN STYLE)  -->
+  <!-- ===================================================================== -->
+  <div id="spinWheel-view" class="arcade-game-view hidden">
+    <div class="game-view-header">
+      <div class="game-view-title-wrap">
+        <span class="game-view-icon">🎡</span>
+        <h2>Wheel of Demands</h2>
+      </div>
+      <button type="button" class="arcade-back-link" onclick="window.ArcadeHub.closeGameView()">✕ Back</button>
+    </div>
+    <div class="game-view-container">
+      <div id="spinWheel-stage"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 🔐 GAME 4 VIEW: SECRET MYSTERY VAULT (GRAND CLIMAX)                   -->
+  <!-- ===================================================================== -->
+  <div id="secretVault-view" class="arcade-game-view hidden">
+    <div class="game-view-header">
+      <div class="game-view-title-wrap">
+        <span class="game-view-icon">🔐</span>
+        <h2>Secret Mystery Vault</h2>
+      </div>
+      <button type="button" class="arcade-back-link" onclick="window.ArcadeHub.closeGameView()">✕ Back</button>
+    </div>
+    <div class="game-view-container">
+      <div id="secretVault-stage"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="content.js?v=5"></script>
+  <script src="utils.js?v=5"></script>
+  <script src="flappySana.js?v=5"></script>
+  <script src="balloonPop.js?v=5"></script>
+  <script src="spinWheel.js?v=5"></script>
+  <script src="secretVault.js?v=5"></script>
+  <script src="arcade.js?v=5"></script>
+  <!-- ✨ Magic Cursor Trail -->
+  <script src="cursorTrail.js"></script>
+</body>
+</html>

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Saniya! 🎂✨</title>
+
+  <!-- Google Fonts: Modern, Warm & Aesthetic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=7.0" />
+</head>
+<body>
+
+  <!-- Ambient Clay Warm Pastel Background -->
+  <div class="ambient-layer" id="ambient-layer">
+    <div class="clay-blob blob-1"></div>
+    <div class="clay-blob blob-2"></div>
+    <div class="clay-blob blob-3"></div>
+    <div class="clay-blob blob-4"></div>
+  </div>
+
+  <!-- Confetti Canvas for 60fps Celebrations -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ============================================================== -->
+  <!-- TOP MUSIC PLAYER BAR (Clean, Sleek, Centered at the very top)  -->
+  <!-- ============================================================== -->
+  <header class="top-music-bar" id="top-music-bar" aria-label="Audio Player">
+    <div class="music-player-card" id="music-player-card">
+      
+      <!-- Track Cover & Disc -->
+      <div class="player-cover-wrap">
+        <img id="player-track-cover" src="shinchan-birthday.png" alt="Cover Art" class="player-cover-img" />
+        <div class="disc-spin-ring" id="disc-spin-ring"></div>
+      </div>
+
+      <!-- Track Details & Track Switcher -->
+      <div class="player-center-content">
+        <div class="player-text-row">
+          <div class="player-title-box">
+            <span class="player-track-title" id="player-track-title">Aaj Tumhara B'Day Hai 🎂</span>
+            <span class="player-track-artist" id="player-track-artist">Shinchan Special • Track 1/2</span>
+          </div>
+
+          <!-- Quick Track Switch Pills -->
+          <div class="track-switch-pills">
+            <button type="button" class="pill-btn active" id="pill-0" onclick="switchTrack(0)" title="Play Shinchan Song">
+              <span>🎈 Shinchan</span>
+            </button>
+            <button type="button" class="pill-btn" id="pill-1" onclick="switchTrack(1)" title="Play Tareef Song">
+              <span>💖 Tareef</span>
+            </button>
+            <a href="arcade.html" class="pill-btn arcade-nav-pill" title="Play Birthday Games!">
+              <span>🎮 Arcade</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Progress Bar & Time -->
+        <div class="player-progress-row">
+          <span class="player-time" id="player-time-current">0:00</span>
+          <div class="player-progress-track" id="player-progress-track" onclick="seekAudio(event)" title="Click to seek">
+            <div class="player-progress-fill" id="player-progress-fill"></div>
+          </div>
+          <span class="player-time" id="player-time-total">0:37</span>
+        </div>
+      </div>
+
+      <!-- Playback Controls -->
+      <div class="player-controls-wrap">
+        <button type="button" class="player-btn btn-prev" onclick="prevTrack()" title="Previous Song" aria-label="Previous Song">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button type="button" class="player-btn btn-play-main" id="btn-play-main" onclick="togglePlayMusic()" title="Play / Pause" aria-label="Play or Pause">
+          <svg id="svg-play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="svg-pause" class="hidden-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <button type="button" class="player-btn btn-next" onclick="nextTrack()" title="Change Song (Next)" aria-label="Next Song">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="m6 18 8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+      </div>
+
+      <!-- Equalizer Visualizer Bars -->
+      <div class="player-equalizer" id="player-equalizer" title="Sound Indicator">
+        <span class="eq-bar"></span>
+        <span class="eq-bar"></span>
+        <span class="eq-bar"></span>
+        <span class="eq-bar"></span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Audio Element (Controlled by script.js) -->
+  <audio id="bg-audio" preload="auto"></audio>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 1: MIDNIGHT COUNTDOWN & VELVET CURTAIN REVEAL           -->
+  <!-- ============================================================== -->
+  <div id="curtain-left" class="curtain"><div class="curtain-fabric"></div></div>
+  <div id="curtain-right" class="curtain"><div class="curtain-fabric"></div></div>
+
+  <div id="countdown-wrap" class="screen-stage">
+    <div class="countdown-clay-card">
+      <div class="clay-clock-housing">
+        <div class="clock-dial-wrap">
+          <svg class="clay-clock-svg" viewBox="0 0 280 280" aria-label="Analog Clock">
+            <defs>
+              <linearGradient id="clock-rim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffb6c1" />
+                <stop offset="50%" stop-color="#f06292" />
+                <stop offset="100%" stop-color="#c2185b" />
+              </linearGradient>
+            </defs>
+            <circle cx="140" cy="140" r="132" fill="url(#clock-rim-grad)" filter="drop-shadow(0 6px 14px rgba(194,24,91,0.35))"/>
+            <circle cx="140" cy="140" r="122" fill="#fff0f5" stroke="#ffb6c1" stroke-width="2.5"/>
+            
+            <g id="clock-ticks"></g>
+            <g id="clock-numerals"></g>
+            
+            <text x="140" y="96" font-family="'Outfit', sans-serif" font-size="10" font-weight="800" letter-spacing="3" fill="#c2185b" text-anchor="middle">MIDNIGHT</text>
+            <text x="140" y="112" font-family="'Caveat', cursive" font-size="18" font-weight="700" fill="#881337" text-anchor="middle">17 November ✨</text>
+            
+            <!-- Clock Hands -->
+            <g id="hour-hand" class="clock-hand hour-hand">
+              <line x1="140" y1="140" x2="140" y2="84" stroke="#c2185b" stroke-width="5.5" stroke-linecap="round"/>
+            </g>
+            <g id="minute-hand" class="clock-hand minute-hand">
+              <line x1="140" y1="140" x2="140" y2="60" stroke="#e91e63" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <g id="second-hand" class="clock-hand second-hand">
+              <line x1="140" y1="165" x2="140" y2="44" stroke="#ff1744" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="140" cy="155" r="4.5" fill="#ff1744"/>
+            </g>
+            <circle cx="140" cy="140" r="7.5" fill="#e91e63"/>
+            <circle cx="140" cy="140" r="3" fill="#ffffff"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="countdown-info-box">
+        <div class="clay-pill-tag">✦ SANIYA'S 21ST BIRTHDAY REVEAL ✦</div>
+        <div class="digital-time-display">
+          <span id="hh">11</span><span class="colon">:</span>
+          <span id="mm">59</span><span class="colon">:</span>
+          <span id="ss">55</span>
+        </div>
+        <p class="countdown-hint">Dhadkan thaam lo Sana... Midnight aane wala hai! 🕛💖</p>
+        <button class="skip-countdown-btn" onclick="skipCountdownDirectly()">Skip Countdown ⏩</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="midnight-flash-burst"></div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 2: AESTHETIC PASSCODE VERIFICATION (REEL STYLE)         -->
+  <!-- ============================================================== -->
+  <div id="quiz-screen" class="hidden-screen">
+    <div class="aesthetic-passcode-card" id="quiz-card">
+      
+      <!-- Top Center Polaroid with Ribbon Bow (Reel Style) -->
+      <div class="passcode-polaroid-frame">
+        <div class="polaroid-bow-ribbon">🎀</div>
+        <div class="polaroid-img-wrapper">
+          <img id="saniya-cameo-img" src="saniya-portrait.jpg" alt="Saniya - Birthday Girl" />
+        </div>
+      </div>
+
+      <!-- Mascot Badge Corner (Shinchan Preserved) -->
+      <div class="passcode-shinchan-mascot" title="Shinchan Birthday Squad">
+        <img src="shinchan-birthday.png" alt="Shinchan Mascot" />
+        <span>Shinchan Approved 🎈</span>
+      </div>
+
+      <!-- Card Title & Hint -->
+      <div class="passcode-header-aesthetic">
+        <span class="passcode-sub-tag">A surprise for Saniya 💖</span>
+        <h2 id="quiz-title" class="passcode-cursive-title">Enter Your Secret Code <span class="heart-pulse">💖</span></h2>
+        <p id="quiz-hint-label" class="passcode-hint-label">Hint: Try 2004</p>
+      </div>
+
+      <!-- 4 PIN Indicator Dots (○ ○ ○ ○) -->
+      <div class="passcode-dots-row">
+        <div class="passcode-dot" id="b0"></div>
+        <div class="passcode-dot" id="b1"></div>
+        <div class="passcode-dot" id="b2"></div>
+        <div class="passcode-dot" id="b3"></div>
+      </div>
+
+      <!-- Feedback / Error Text -->
+      <p id="quiz-text" class="passcode-status-msg"></p>
+
+      <!-- Circular Numeric Keypad (Reel Style) -->
+      <div class="aesthetic-circular-keypad" id="keypad">
+        <button type="button" class="key-circle" onclick="pressKey('1')">1</button>
+        <button type="button" class="key-circle" onclick="pressKey('2')">2</button>
+        <button type="button" class="key-circle" onclick="pressKey('3')">3</button>
+        <button type="button" class="key-circle" onclick="pressKey('4')">4</button>
+        <button type="button" class="key-circle" onclick="pressKey('5')">5</button>
+        <button type="button" class="key-circle" onclick="pressKey('6')">6</button>
+        <button type="button" class="key-circle" onclick="pressKey('7')">7</button>
+        <button type="button" class="key-circle" onclick="pressKey('8')">8</button>
+        <button type="button" class="key-circle" onclick="pressKey('9')">9</button>
+        <button type="button" class="key-circle key-del" onclick="deleteDigit()" title="Delete">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/>
+          </svg>
+        </button>
+        <button type="button" class="key-circle" onclick="pressKey('0')">0</button>
+        <button type="button" class="key-circle key-submit-heart" onclick="submitPasscode()" title="Submit">
+          <span>💖</span>
+        </button>
+      </div>
+
+      <!-- Action Link -->
+      <div class="passcode-footer-links">
+        <button type="button" class="text-link-btn" onclick="showPasscodeHint()">💡 Need a hint?</button>
+        <button type="button" id="retry-btn" class="clay-pill-btn hidden-btn" onclick="resetQuiz()">Try Again 🔄</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shinchan Prank Modal (First Attempt Tease) -->
+  <div id="prank-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card prank-modal-card">
+      <div class="prank-shinchan-img-wrap">
+        <img src="shinchan-wrong.png" alt="Shinchan Laughing" />
+      </div>
+      <h3>Hawww Sana Bhoot! 👻</h3>
+      <p id="prank-modal-desc">
+        Galat code! 😜 Sana Bhoot ko apna hi birth year yaad nahi?<br>
+        <strong>Wait... mazaak kar raha tha! 😂</strong>
+      </p>
+      <div class="prank-hint-pill">
+        💡 Wapas se wahi code daalo (2004) cutie, ab open ho jayega! 💖
+      </div>
+      <button class="clay-pill-btn btn-yes" onclick="closePrankModal()">
+        Wapas Daalti Hoon! 😜💖
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN: TAP TO BEGIN (REEL FEATURE)                            -->
+  <!-- ============================================================== -->
+  <div id="tap-to-begin-screen" class="hidden-screen">
+    <div class="tap-begin-card">
+      <div class="floating-heart-beacon" onclick="proceedFromTapToBegin()">
+        <span class="beacon-heart">💖</span>
+        <div class="beacon-ripple r1"></div>
+        <div class="beacon-ripple r2"></div>
+      </div>
+      <h2 class="tap-begin-title">Tap to</h2>
+      <h1 class="tap-begin-cursive">Begin 💖</h1>
+      <p class="tap-begin-sub">A special surprise created just for Sana Bhoot ✨</p>
+      <button class="clay-pill-btn btn-tap-start" onclick="proceedFromTapToBegin()">
+        Open Surprise ➜
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 3: TEASER / DECISION SCREEN ("Do you wanna see it?")     -->
+  <!-- ============================================================== -->
+  <div id="surprise-screen" class="hidden-screen">
+    <div class="teaser-clay-card" id="teaser-card">
+      
+      <div class="clay-arch-header">
+        <h1 id="teaser-title" class="curved-title">Wait... Ek second Sana! 👀</h1>
+      </div>
+
+      <div class="dance-mascot-container">
+        <div class="clay-mascot-pod">
+          <img id="dance-gif" src="shinchan-dance.gif" alt="Dancing Reaction" />
+        </div>
+      </div>
+
+      <div class="teaser-content-box">
+        <p class="teaser-subtitle" id="surprise-prompt">Maine tumhare liye kuch bohot special banaya hai...<br><strong>Dekhna chahti ho? 💖</strong></p>
+        
+        <div class="teaser-btn-group" id="teaser-buttons">
+          <button id="btn-yes" class="clay-pill-btn btn-yes" onclick="handleChoice('yes')">
+            <span class="btn-icon">💖</span>
+            <span class="btn-text">YES, Bilkul!</span>
+          </button>
+          <button id="btn-no" class="clay-pill-btn btn-no" onclick="handleChoice('no')">
+            <span class="btn-icon">😜</span>
+            <span class="btn-text">Nahi Dekhna</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SCREEN 4: MAIN SURPRISE - 3 MYSTERY CLAY GIFT PODS             -->
+  <!-- ============================================================== -->
+  <div id="gift-screen" class="hidden-screen">
+    <div class="main-gift-stage">
+      
+      <!-- Top Greetings & Header -->
+      <div class="gift-header-banner">
+        <div class="clay-pill-tag">🎉 IT'S CELEBRATION TIME 🎉</div>
+        <h1 class="main-birthday-title">Happy Birthday Saniya! 🎂🌸</h1>
+        <p class="main-birthday-sub">Har ek mystery box me meri favorite person ke liye ek pyaara sa surprise chupa hai. Tap on them! ✨</p>
+      </div>
+
+      <!-- VIP Feature Banner: Saniya's Birthday Arcade -->
+      <div class="arcade-feature-banner">
+        <div class="arcade-banner-inner">
+          <div class="arcade-banner-left">
+            <div class="arcade-banner-badge">✨ NEW: SANIYA'S BIRTHDAY ARCADE ✨</div>
+            <h3 class="arcade-banner-title">Saniya's Birthday Arcade 🕹️</h3>
+            <p class="arcade-banner-desc">Flappy Sana, Balloon Pop Wishes, Wheel of Demands & Secret Mystery Vault! Unlock secret gifts to reveal the Grand Finale.</p>
+          </div>
+          <a href="arcade.html" class="arcade-banner-launch-btn">
+            Play Arcade 🎮 ➜
+          </a>
+        </div>
+      </div>
+
+      <!-- Floating Clay Mystery Boxes Grid (Includes Reel Surprises) -->
+      <div class="mystery-boxes-grid">
+        
+        <!-- Box 1: Memories Clothesline -->
+        <div class="clay-gift-pod pod-1" onclick="openMysteryBox(1)" tabindex="0">
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">📸</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #1</span>
+            <span class="pod-name">Hanging Memories</span>
+            <span class="pod-action">Open Photo Line ➜</span>
+          </div>
+        </div>
+
+        <!-- Box 2: Birthday Cake & Blow Candles (Reel Style) -->
+        <div class="clay-gift-pod pod-2 featured-pod" onclick="openMysteryBox(2)" tabindex="0">
+          <div class="featured-sparkle-badge">Most Fun! ✨</div>
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">🎂</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #2</span>
+            <span class="pod-name">Make A Wish Cake</span>
+            <span class="pod-action">Blow 5 Candles ➜</span>
+          </div>
+        </div>
+
+        <!-- Box 3: Retro Camera (Reel Feature) -->
+        <div class="clay-gift-pod pod-camera featured-pod-warm" onclick="openMysteryBox(3)" tabindex="0">
+          <div class="featured-sparkle-badge">Reel Special 📷</div>
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">📷</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #3</span>
+            <span class="pod-name">Retro Camera</span>
+            <span class="pod-action">Capture Memory ➜</span>
+          </div>
+        </div>
+
+        <!-- Box 4: Scratch Card (Reel Feature) -->
+        <div class="clay-gift-pod pod-scratch" onclick="openMysteryBox(4)" tabindex="0">
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">🎁</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #4</span>
+            <span class="pod-name">Scratch Card</span>
+            <span class="pod-action">Scratch to Reveal ➜</span>
+          </div>
+        </div>
+
+        <!-- Box 5: Love Letter (Typewriter) -->
+        <div class="clay-gift-pod pod-letter" onclick="openMysteryBox(5)" tabindex="0">
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">💌</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #5</span>
+            <span class="pod-name">Heartfelt Letter</span>
+            <span class="pod-action">Read Secret Note ➜</span>
+          </div>
+        </div>
+
+        <!-- Box 6: Final Wishes & Replay (Reel Frame 30) -->
+        <div class="clay-gift-pod pod-final" onclick="openMysteryBox(6)" tabindex="0">
+          <div class="gift-box-visual">
+            <div class="clay-ribbon-vertical"></div>
+            <div class="clay-ribbon-horizontal"></div>
+            <div class="clay-bow">🎀</div>
+            <div class="gift-box-body">
+              <span class="gift-box-icon">💖</span>
+            </div>
+          </div>
+          <div class="gift-pod-label">
+            <span class="pod-num">Surprise #6</span>
+            <span class="pod-name">Birthday Card</span>
+            <span class="pod-action">Final Message ➜</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Interactive Mascot Footer -->
+      <div class="gift-footer-mascot-card">
+        <div class="footer-mascot-avatar">
+          <img src="shinchan-gift.gif" alt="Shinchan Celebrating" />
+        </div>
+        <div class="footer-mascot-text">
+          <h3>Sana Bhoot Special Corner 👻</h3>
+          <p>Duniya ki sabse sweet aur dramebaaz dost ke liye ek aur secret list ready hai!</p>
+          <button class="clay-bhoot-trigger-btn" onclick="openBhootSpecialModal()">
+            Read 5 Reasons Why Sana is Special 💖
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: HANGING MEMORIES CLOTHESLINE (SCRAPBOOK GALLERY)       -->
+  <!-- ============================================================== -->
+  <div id="memories-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card memories-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('memories-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">📸</span>
+          <h2>Memories on a Clothesline</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('memories-modal')">✕</button>
+      </div>
+
+      <div class="clothesline-stage">
+        <div class="clothesline-wire"></div>
+
+        <div class="clothesline-scroll-wrap" id="clothesline-scroll-wrap">
+          <div class="clothesline-track" id="clothesline-track"></div>
+        </div>
+
+        <button class="clothesline-nav-btn nav-prev" onclick="scrollClothesline(-1)" aria-label="Previous Photo">❮</button>
+        <button class="clothesline-nav-btn nav-next" onclick="scrollClothesline(1)" aria-label="Next Photo">❯</button>
+      </div>
+
+      <div class="clothesline-footer-tip">
+        <span>💡 Tap on any polaroid photo to zoom & see special note!</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1B: PHOTO SINGLE ZOOM MODAL (WITH PROMINENT BACK BUTTON) -->
+  <!-- ============================================================== -->
+  <div id="photo-zoom-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card photo-zoom-card">
+      
+      <!-- Top Actions Bar: Prominently Aligned to Right -->
+      <div class="zoom-header-actions">
+        <button type="button" class="zoom-back-pill" onclick="closeModal('photo-zoom-modal')" title="Back to Gallery">
+          <span class="back-icon">←</span>
+          <span class="back-text">Back</span>
+        </button>
+        <button type="button" class="clay-modal-close zoom-close-btn" onclick="closeModal('photo-zoom-modal')" title="Close">✕</button>
+      </div>
+
+      <div class="zoom-polaroid">
+        <div class="zoom-img-wrap">
+          <img id="zoom-img" src="" alt="Memory Preview" />
+        </div>
+        <div class="zoom-caption-box">
+          <h3 id="zoom-title">Memory Title</h3>
+          <p id="zoom-caption">Memory Caption</p>
+          <span id="zoom-date" class="zoom-date-badge">Date</span>
+        </div>
+      </div>
+
+      <div class="zoom-card-footer">
+        <button type="button" class="clay-pill-btn btn-back-modal" onclick="closeModal('photo-zoom-modal')">
+          ← Back to Memories
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: CLAY BIRTHDAY CAKE & MAKE A WISH (5 CANDLES - REEL)   -->
+  <!-- ============================================================== -->
+  <div id="cake-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card cake-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('cake-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">🎂</span>
+          <h2>It's Your Surprise!</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('cake-modal')">✕</button>
+      </div>
+
+      <div class="cake-interactive-stage" onclick="blowNextCandleOnStage(event)">
+        
+        <p class="cake-reel-subtitle">Blow the candles, Saniya, and see what's inside 🎂</p>
+        
+        <!-- Live Candle Counter Badge (Reel Style) -->
+        <div class="candle-counter-pill" id="candle-counter-pill">
+          Tap anywhere to blow the candles <span class="counter-highlight" id="candle-count-display">(5 of 5 left)</span>
+        </div>
+
+        <!-- Wish Banner (Revealed after candles are blown) -->
+        <div class="cake-wish-banner hidden" id="cake-wish-banner">
+          <div class="banner-sparkles">✨ 🎂 🎶 ✨</div>
+          <h2 id="cake-wish-headline">🎉 HAPPY BIRTHDAY SANIYA! 🎉</h2>
+          <p id="cake-wish-subtext">May all your wishes come true hamesha! (Sweet flute melody playing 🎶)</p>
+          <button class="clay-pill-btn btn-continue-after-cake" onclick="closeModal('cake-modal'); openMysteryBox(3);">
+            Continue to Next Surprise ➜
+          </button>
+        </div>
+
+        <!-- 3-Tier Pastel Clay Cake Container -->
+        <div class="clay-cake-wrap" id="clay-cake-wrap">
+          
+          <!-- 5 Candles Layer (Reel Style) -->
+          <div class="candles-row candles-5" id="candles-row">
+            <div class="clay-candle" onclick="blowCandle(1, event)" id="candle-1">
+              <div class="candle-flame" id="flame-1"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-stick c-pink"></div>
+            </div>
+            <div class="clay-candle" onclick="blowCandle(2, event)" id="candle-2">
+              <div class="candle-flame" id="flame-2"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-stick c-rose"></div>
+            </div>
+            <div class="clay-candle middle-candle" onclick="blowCandle(3, event)" id="candle-3">
+              <div class="candle-flame" id="flame-3"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-stick c-gold"></div>
+            </div>
+            <div class="clay-candle" onclick="blowCandle(4, event)" id="candle-4">
+              <div class="candle-flame" id="flame-4"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-stick c-rose"></div>
+            </div>
+            <div class="clay-candle" onclick="blowCandle(5, event)" id="candle-5">
+              <div class="candle-flame" id="flame-5"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-stick c-pink"></div>
+            </div>
+          </div>
+
+          <!-- Cake Tiers -->
+          <div class="cake-tier tier-top">
+            <div class="tier-decor-cherries">
+              <span>🌸</span><span>🍓</span><span>🌸</span>
+            </div>
+          </div>
+
+          <div class="cake-tier tier-middle"></div>
+          <div class="cake-tier tier-bottom"></div>
+
+          <!-- Cake Stand -->
+          <div class="clay-cake-stand">
+            <div class="stand-plate"></div>
+            <div class="stand-base"></div>
+          </div>
+
+        </div>
+
+        <!-- Cake Controls & Hints -->
+        <div class="cake-controls-box">
+          <div class="cake-btn-row">
+            <button class="clay-pill-btn btn-blow-all" onclick="blowAllCandles(event)">
+              💨 Blow All Candles (Flute Tune 🎶)
+            </button>
+            <button class="clay-pill-btn btn-relight hidden-btn" id="btn-relight" onclick="relightCandles(event)">
+              🔥 Relight Candles
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: RETRO CAMERA - "CAPTURE A MOMENT JUST FOR YOU" (REEL) -->
+  <!-- ============================================================== -->
+  <div id="camera-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card camera-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('camera-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">📷</span>
+          <h2>Capture A Moment</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('camera-modal')">✕</button>
+      </div>
+
+      <div class="camera-stage-box">
+        <h3 class="camera-title-cursive">Capture a Moment Just for You 💖</h3>
+        <p class="camera-subtitle">Tap the camera and watch your memory come to life! 📸</p>
+        
+        <!-- Interactive Vintage Camera Button -->
+        <div class="retro-camera-unit" id="retro-camera-btn" onclick="snapCameraPhoto()" title="Tap to capture!">
+          <div class="camera-body-wrap">
+            <div class="camera-top-plate">
+              <div class="camera-shutter-btn"></div>
+              <div class="camera-flash-cube"></div>
+              <div class="camera-dial"></div>
+            </div>
+            <div class="camera-main-housing">
+              <div class="camera-leather-strip"></div>
+              <div class="camera-lens-assembly">
+                <div class="lens-outer-ring"></div>
+                <div class="lens-aperture">
+                  <div class="lens-glass-reflection"></div>
+                </div>
+              </div>
+              <div class="camera-viewfinder-lens"></div>
+            </div>
+            <!-- Bottom Polaroid Ejection Slot -->
+            <div class="camera-eject-slot">
+              <div class="slot-line"></div>
+            </div>
+          </div>
+          <span class="camera-pulse-badge">📸 Click to Snap!</span>
+        </div>
+
+        <!-- Flash Overlay for Camera -->
+        <div id="camera-flash-overlay" class="camera-flash-effect"></div>
+
+        <!-- Ejected Polaroid Memory (Emerges Downwards with Saniya's Photo) -->
+        <div class="camera-photo-eject hidden" id="camera-photo-eject">
+          <div class="polaroid-frame-ejected">
+            <div class="washi-tape-strip tape-top"></div>
+            <div class="polaroid-img-box">
+              <img src="saniya-portrait.jpg" alt="Saniya 💖" id="camera-ejected-img" />
+            </div>
+            <div class="polaroid-caption-area">
+              <h4 id="camera-ejected-title">Saniya 💖</h4>
+              <p id="camera-ejected-caption">A smile that brightens up the darkest day! ✨</p>
+              <span class="polaroid-date-stamp">Golden Moments ✨</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="clay-pill-btn btn-camera-continue hidden-btn" id="btn-camera-continue" onclick="closeModal('camera-modal'); openMysteryBox(4);">
+          Continue to Scratch Card ➜
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 4: INTERACTIVE SCRATCH CARD - "IT'S YOUR BIRTHDAY!" (REEL)-->
+  <!-- ============================================================== -->
+  <div id="scratch-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card scratch-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('scratch-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">🎁</span>
+          <h2>Scratch Your Surprise</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('scratch-modal')">✕</button>
+      </div>
+
+      <div class="scratch-stage-box">
+        <h3 class="scratch-title-cursive">It's Your Birthday! 🎂</h3>
+        <p class="scratch-subtitle">Scratch the card and see what special surprise is waiting for you 🎁</p>
+
+        <!-- Scratch Card Container -->
+        <div class="scratch-card-canvas-wrap" id="scratch-card-wrapper">
+          
+          <!-- Hidden Revealed Card Underneath -->
+          <div class="scratch-reveal-card" id="scratch-reveal-card">
+            <div class="scratch-photo-frame">
+              <img src="saniya-portrait.jpg" alt="Saniya - Birthday Girl" />
+            </div>
+            <div class="scratch-text-box">
+              <span class="scratch-sparkle-tag">✨ SPECIAL SURPRISE ✨</span>
+              <h4>You Are Truly One in a Million! 🌟</h4>
+              <p>Meri sabse favorite bhootni ko janamdin ki dher saari shubhkaamnayein! Hamesha aise hi muskurati raho! 💖</p>
+              <span class="scratch-sign">With all my love, Tumhara Favorite Dost 🫶🏻</span>
+            </div>
+          </div>
+
+          <!-- HTML5 Scratch Canvas -->
+          <canvas id="scratch-canvas" class="scratch-canvas" width="340" height="340"></canvas>
+        </div>
+
+        <p class="scratch-instruction-text" id="scratch-instruction-text">
+          👆 Use your finger or cursor to scratch off the festive foil!
+        </p>
+
+        <button class="clay-pill-btn btn-scratch-continue hidden-btn" id="btn-scratch-continue" onclick="closeModal('scratch-modal'); openMysteryBox(5);">
+          Scratch to Continue ✨
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 5: 3D CLAY ENVELOPE & HEARTFELT LETTER (TYPEWRITER)       -->
+  <!-- ============================================================== -->
+  <div id="letter-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card letter-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('letter-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">💌</span>
+          <h2>A Letter For Saniya</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('letter-modal')">✕</button>
+      </div>
+
+      <div class="letter-scrollable-paper" id="letter-paper">
+        <div class="letter-stamp-corner">
+          <div class="clay-wax-seal">
+            <span>S 💖</span>
+          </div>
+          <span class="letter-date-stamp" id="letter-stamp-date">17 Nov 2004 ✨</span>
+        </div>
+
+        <div class="letter-badge-chip" id="letter-badge-chip">FROM MY HEART 💌</div>
+        
+        <h3 class="letter-salutation" id="letter-salutation-el">
+          Dearest Saniya (Meri Favorite Person & Sabse Pyaari Bhootni 👻💖),
+        </h3>
+
+        <div class="letter-body-content" id="letter-body-content"></div>
+
+        <div class="letter-signoff-box" id="letter-signoff-box">
+          <p class="letter-signoff" id="letter-signoff-el">
+            With endless love, respect & friendship,<br><strong>Tumhara Favorite Dost 💖</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="letter-controls-bar">
+        <button class="clay-pill-btn letter-btn-secondary" onclick="skipLetterTypewriter()" id="btn-skip-letter">
+          ⚡ Skip Animation (Read All)
+        </button>
+        <button class="clay-pill-btn letter-btn-primary" onclick="restartLetterTypewriter()">
+          🔄 Replay Letter
+        </button>
+        <button class="clay-pill-btn btn-next-to-final" onclick="closeModal('letter-modal'); openMysteryBox(6);">
+          Final Birthday Card ➜
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 6: FINAL BIRTHDAY CARD & REPLAY (REEL FRAME 30 STYLE)     -->
+  <!-- ============================================================== -->
+  <div id="final-heart-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card final-heart-card-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('final-heart-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">💖</span>
+          <h2>Birthday Note</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('final-heart-modal')">✕</button>
+      </div>
+
+      <div class="final-heart-stage">
+        
+        <!-- Glowing 3D Heart (Reel Style) -->
+        <div class="glowing-3d-heart-beacon">
+          <span class="pulsing-heart-icon">💖</span>
+          <div class="heart-ambient-glow"></div>
+        </div>
+
+        <h3 class="final-card-script-title">Happy Birthday</h3>
+        <h2 class="final-card-name">Saniya 🌸</h2>
+
+        <div class="final-white-letter-card">
+          <p class="final-letter-quote">
+            "Here's to another year of being exactly who you are — sweet, fun, caring and our favorite bhootni in the world! Stay blessed and smiling hamesha."
+          </p>
+          <div class="final-letter-signature">
+            <span>With love,</span>
+            <strong>Tumhara Favorite Dost 💖</strong>
+          </div>
+        </div>
+
+        <button class="clay-pill-btn btn-replay-all" onclick="replayEntireExperience()">
+          🔄 Replay Experience
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 7: SANA BHOOT SPECIAL REASONS 👻 (SHINCHAN ASSETS)        -->
+  <!-- ============================================================== -->
+  <div id="bhoot-modal" class="clay-modal-overlay hidden">
+    <div class="clay-modal-card bhoot-modal-container">
+      
+      <div class="modal-top-bar">
+        <button type="button" class="modal-side-back-btn" onclick="closeModal('bhoot-modal')" title="Go Back">
+          <span class="back-arrow">←</span> <span class="back-text">Back</span>
+        </button>
+        <div class="modal-title-wrap">
+          <span class="modal-badge-icon">👻</span>
+          <h2>Top 5 Reasons Why Sana is Special</h2>
+        </div>
+        <button class="clay-modal-close" onclick="closeModal('bhoot-modal')">✕</button>
+      </div>
+
+      <p class="bhoot-modal-intro">
+        Duniya chahe jo kahe, hamari Sana Bhoot sabse pyari aur favorite person hai! Here is official proof: 💖
+      </p>
+
+      <div class="bhoot-reasons-list" id="bhoot-reasons-list"></div>
+
+      <div class="bhoot-modal-footer">
+        <button class="clay-pill-btn btn-yes" onclick="closeModal('bhoot-modal')">
+          Haan Sach Me! 👻💖
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts with cache buster -->
+  <script src="config.js?v=7.0"></script>
+  <script src="script.js?v=7.0"></script>
+  <!-- ✨ Magic Cursor Trail -->
+  <script src="cursorTrail.js"></script>
+</body>
+</html>
